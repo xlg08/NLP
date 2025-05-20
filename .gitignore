@@ -1,0 +1,11 @@
+*.zip
+*.rar
+*.csv
+.idea
+.DS_Store
+*/*.log
+*/.pytest_cache
+*/data
+*/*.bin
+*/fil9
+.whl
