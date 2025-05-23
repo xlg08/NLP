@@ -7,13 +7,12 @@ import jieba
 import torch.nn as nn
 
 
-# 1 对句子分词 word_list
-# 2 对句子word2id求my_token_list，对句子文本数值化sentence2id
-# 3 创建nn.Embedding层，查看每个token的词向量数据
-# 4 从nn.Embedding层中根据idx拿词向量
+# 1.对句子分词 word_list
+# 2.对句子word2id求my_token_list，对句子文本数值化sentence2id
+# 3.创建nn.Embedding层，查看每个token的词向量数据
+# 4.从nn.Embedding层中根据idx拿词向量
 
 def dm02_nnembeding_show():
-
     # 1 对句子分词 word_list
     sentence1 = '传智教育是一家上市公司，旗下有黑马程序员品牌。我是在黑马这里学习人工智能'
     sentence2 = "我爱自然语言处理"
@@ -50,6 +49,7 @@ def dm02_nnembeding_show():
         print(tmpvec)
         # print('%4s' % (mytokenizer.index_word[idx + 1]), tmpvec.detach().numpy())
 
+
 # 词嵌入
 def demo_emb():
     # 文本
@@ -57,23 +57,29 @@ def demo_emb():
     sentence2 = "我爱自然语言处理"
     sentences = [sentence1, sentence2]
     word_list = []
+
     # 分词
     for sentence in sentences:
         word_list.append(jieba.lcut(sentence))
     print(word_list)
+
     # Tokenizer
     tokenizer = Tokenizer()
     tokenizer.fit_on_texts(word_list)
     print(tokenizer.word_index)
     print(tokenizer.index_word)
+
     # 获取所有token
     word_list = tokenizer.index_word.values()
+
     # 词嵌入层:词表大小，词向量维度
-    embed =nn.Embedding(num_embeddings=len(word_list),embedding_dim=5)
+    embed = nn.Embedding(num_embeddings=len(word_list), embedding_dim=5)
+
     # 获取特定词语的向量
-    print(embed(torch.tensor(19-1)))
+    print(embed(torch.tensor(19 - 1)))
+    
     # 遍历获取每一个词的词向量
-    for i in range(len(word_list)): # 词语
+    for i in range(len(word_list)):  # 词语
         # 对应的词语的id
         id = tokenizer.word_index[list(word_list)[i]]
         print(list(word_list)[i])
