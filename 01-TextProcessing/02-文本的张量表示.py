@@ -84,6 +84,6 @@ def demo_onehot_use():
 
 
 if __name__ == '__main__':
-    dm_onehot_gen()
+    # dm_onehot_gen()
     # demo_onehot()
-    # demo_onehot_use()
+    demo_onehot_use()
