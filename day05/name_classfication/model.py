@@ -50,13 +50,14 @@ class RNN(nn.Module):
         # print(out[-1] == hn)      # 都是True  最后的输出 就是 hn
 
         # fc 全连接层
-        print("out的形状：", out.shape)         # 一次性输入时：torch.Size([4, 1, 64])    一个单词一个单词的输入时：torch.Size([1, 1, 64]) 输入四次
-        print("out[-1]的形状：", out[-1].shape)         # torch.Size([1, 64])
-        # print("out：", out)
+        # 一次性输入时：torch.Size([4, 1, 64])    一个单词一个单词的输入时：torch.Size([1, 1, 64]) 输入四次
+        # print("out的形状：", out.shape)
+        # print("out[-1]的形状：", out[-1].shape)         # torch.Size([1, 64])
+        # print("卷积层的out输出为：", out)
         out = self.fc(out[-1])  # 只需要最后的输出就可以，因为单词是很短的文本序列
 
+        # print(f"全连接层的out输出：", out)
         # 激活函数
-        print(f"全连接层的输出：", out)
         out = self.softmax(out)
 
         return out, hn      # out 是 经过 softmax 激活之后的输入， hn 是卷积层最后的隐藏状态
@@ -66,7 +67,7 @@ class RNN(nn.Module):
     def initHidden(self):
         #                隐藏层层数       批次数  隐藏层神经元数量（隐藏状态的维数）
         h0 = torch.zeros(self.num_layers, 1, self.hidden_size)
-
+        # print("h0的形状为：", h0.shape)      # h0的形状为：torch.Size([1, 1, 64])
         return h0
 
 
