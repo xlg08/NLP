@@ -1,4 +1,4 @@
-from data_preprocess import all_letters, n_letters, n_categories, categories
+from data_preprocess import all_letters,n_letters, n_categories,categories
 import torch
 from model import RNN, LSTM, GRU
 
@@ -19,7 +19,7 @@ def rnn_predict(x):
     # 热编码
     tensor_x = text2oht(x).unsqueeze(0)
     # 加载模型
-    model = RNN(input_size=n_letters, hidden_size=128, output_size=n_categories)
+    model = RNN(input_size=n_letters, hidden_size=64, output_size=n_categories)
     # 加载权重
     weight = torch.load('weight/rnn.pt')
     model.load_state_dict(weight)
@@ -27,9 +27,9 @@ def rnn_predict(x):
     # 模型预测
     with torch.no_grad():
         # 输出
-        output, hn = model(tensor_x, model.initHidden(tensor_x))
+        output,hn = model(tensor_x,model.initHidden())
         # topk
-        topV, topid = output.topk(k=3, dim=1, largest=True)
+        topV,topid=output.topk(k=3,dim=1,largest=True)
         # print(topV)
         # print(topid)
         for i in range(3):
@@ -37,12 +37,11 @@ def rnn_predict(x):
             nation = categories[id]
             print(nation)
 
-
 def lstm_predict(x):
     # 热编码
     tensor_x = text2oht(x).unsqueeze(0)
     # 加载模型
-    model = LSTM(input_size=n_letters, hidden_size=128, output_size=n_categories)
+    model = LSTM(input_size=n_letters, hidden_size=64, output_size=n_categories)
     # 加载权重
     weight = torch.load('weight/lstm.pt')
     model.load_state_dict(weight)
@@ -50,10 +49,10 @@ def lstm_predict(x):
     # 模型预测
     with torch.no_grad():
         # 输出
-        h0, c0 = model.initHidden(tensor_x)
-        output, hn, cn = model(tensor_x, h0, c0)
+        h0,c0=model.initHidden()
+        output,hn,cn = model(tensor_x,h0,c0)
         # topk
-        topV, topid = output.topk(k=3, dim=1, largest=True)
+        topV,topid=output.topk(k=3,dim=1,largest=True)
         # print(topV)
         # print(topid)
         for i in range(3):
@@ -61,13 +60,12 @@ def lstm_predict(x):
             nation = categories[id]
             print(nation)
 
-
 # gru 预测
 def gru_predict(x):
     # 热编码
     tensor_x = text2oht(x).unsqueeze(0)
     # 加载模型
-    model = GRU(input_size=n_letters, hidden_size=128, output_size=n_categories)
+    model = GRU(input_size=n_letters, hidden_size=64, output_size=n_categories)
     # 加载权重
     weight = torch.load('weight/gru.pt')
     model.load_state_dict(weight)
@@ -75,9 +73,9 @@ def gru_predict(x):
     # 模型预测
     with torch.no_grad():
         # 输出
-        output, hn = model(tensor_x, model.initHidden(tensor_x))
+        output,hn = model(tensor_x,model.initHidden())
         # topk
-        topV, topid = output.topk(k=3, dim=1, largest=True)
+        topV,topid=output.topk(k=3,dim=1,largest=True)
         # print(topV)
         # print(topid)
         for i in range(3):
@@ -85,12 +83,10 @@ def gru_predict(x):
             nation = categories[id]
             print(nation)
 
-
 def dm_test_predic_rnn_lstm_gru():
     # 把三个函数的入口地址 组成列表，统一输入数据进行测试
     for func in [rnn_predict, lstm_predict, gru_predict]:
         func('zhang')
-
 
 if __name__ == '__main__':
     x = 'zhangsan'
