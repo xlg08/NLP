@@ -43,7 +43,7 @@ class NameClassDataset(Dataset):
     def __init__(self, x_list, y_list, n_letter):
         self.x_list = x_list
         self.y_list = y_list
-        self.n_letter = n_letter
+        self.n_letter = n_letter        # 词表大小，即：one-hot编码后词向量的维度
 
     # 样本数量
     def __len__(self):
@@ -74,10 +74,13 @@ class NameClassDataset(Dataset):
 
         max_length = self.__get_maxLength()
         # print(max_length)
-        tesor_x = torch.zeros(max_length, self.n_letter)
 
         # tesor_x = torch.zeros(len(x), self.n_letter)
         # tesor_x = torch.zeros(30, self.n_letter)
+        tesor_x = torch.zeros(max_length, self.n_letter)
+
+        # print("tesor_x.shape：", tesor_x.shape)
+
         for index, char in enumerate(x):
             tesor_x[index][all_letters.find(char)] = 1
         return tesor_x, tesor_y

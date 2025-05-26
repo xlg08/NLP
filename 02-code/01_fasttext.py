@@ -42,5 +42,6 @@ def demo_w2v_use():
 
 
 if __name__ == '__main__':
+
     # demo_w2v()
     demo_w2v_use()
