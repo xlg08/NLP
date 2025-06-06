@@ -1,0 +1,36 @@
+1️⃣ EncoderRNN(...) 是在创建对象
+当调用：
+    my_encoderrnn = EncoderRNN(input_size=..., hidden_size=...)
+    做了三件事：
+        由 Python 的机制调用 EncoderRNN.__new__() 创建实例；
+        然后调用 EncoderRNN.__init__() 初始化实例；
+        最终把这个实例赋值给变量 my_encoderrnn。
+        这就返回了一个继承自 nn.Module 的对象。
+
+2️⃣ 打印 my_encoderrnn 会调用 __repr__ 方法
+当执行：
+    print(my_encoderrnn)    或者在交互式环境中写：my_encoderrnn
+    Python 会自动调用对象的 __repr__() 方法。
+    而在 PyTorch 中，nn.Module 重写了 __repr__() 方法，让它返回模块的结构描述，
+        也就是：
+        EncoderRNN(
+            (embedding): Embedding(2803, 256)
+            (gru): GRU(256, 256, batch_first=True)
+        )
+这个输出表示：
+    EncoderRNN 是的模型名字；
+    包含两个子模块：
+        embedding 是一个 nn.Embedding 层；
+        gru 是一个 nn.GRU 层；
+    这些子模块是在 EncoderRNN.__init__() 方法里定义的，
+        比如：
+            class EncoderRNN(nn.Module):
+                def __init__(self, input_size, hidden_size):
+                super().__init__()
+                self.embedding = nn.Embedding(input_size, hidden_size)
+                self.gru = nn.GRU(hidden_size, hidden_size, batch_first=True)
+
+3️⃣ 子模块管理
+    PyTorch 的 nn.Module 自动管理所有在 __init__ 中定义为 self.xxx = ... 的子模块。
+    这些子模块会被注册到模块内部的 _modules 字典中。
+    这也是为什么 __repr__() 能自动打印出这些内容。
