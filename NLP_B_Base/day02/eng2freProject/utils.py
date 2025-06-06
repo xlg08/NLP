@@ -47,4 +47,4 @@ def normalizeString(s: str):
 
 if __name__ == '__main__':
 	str1 = 'I m sad .@'
-	normalizeString(str1)
+	print(normalizeString(str1))
