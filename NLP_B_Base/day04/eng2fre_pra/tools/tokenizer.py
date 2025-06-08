@@ -4,7 +4,7 @@
 class Tokenizer():
     def __init__(self):
         self.word2idx = {
-            "<pad>": 0,     # 填充符
+            "<PAD>": 0,     # 填充符
             "<SOS>": 1,         # 句子开始符
             "<EOS>": 2          # 句子结束符
         }

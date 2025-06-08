@@ -73,7 +73,6 @@ def my_getdata():
 
     return english_word2index, english_index2word, english_word_n, french_word2index, french_index2word, french_word_n, my_pairs
 
-@staticmethod
 # 自定义张量数据源类
 class MyPairsDataset(Dataset):
     # todo:1- init构造方法, 初始化属性

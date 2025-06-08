@@ -91,6 +91,7 @@ class AttnDecoderRNN(nn.Module):
 
     # todo:2- 定义前向传播方法 forward
     def forward(self, input, hidden, encoder_outputs):
+
         """
         前向传播计算
         :param input: q, 解码器当前预测时间步的输入x, 也是上一个时间步预测的输出y
@@ -99,6 +100,8 @@ class AttnDecoderRNN(nn.Module):
         :return: 预测词表概率向量, 当前时间步的隐藏状态值, 权重概率矩阵
         """
         # 2-1 词嵌入操作
+        print("input：", input)
+        print("input.shape：", input.shape)      # input.shape： torch.Size([1, 1])   [[词索引]]
         embedded = self.embedding(input)
         # print("embedded.shape", embedded.shape)
         # 使用dropout防止过拟合
